@@ -13,6 +13,15 @@
       @row-save="rowSave"
       @search-change="searchChange"
     >
+      <template slot="buildings" slot-scope="scope">
+        <div v-if="scope.row.buildings">
+          <span v-for="(item, key) in scope.row.buildings" :key="item.id">
+            {{ item.name }}
+            {{ key + 1 === scope.row.buildings.length ? "" : "、" }}
+          </span>
+        </div>
+        <div v-else>无</div>
+      </template>
     </avue-crud>
   </div>
 </template>
@@ -57,6 +66,13 @@ export default {
             label: "密码",
             prop: "password",
             showColumn: false,
+          },
+          {
+            label: "管理的楼宇",
+            prop: "buildings",
+            slot: true,
+            editDisplay: false,
+            addDisplay: false,
           },
         ],
       },
