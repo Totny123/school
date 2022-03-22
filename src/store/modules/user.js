@@ -7,6 +7,7 @@ const getDefaultState = () => {
     token: getToken(),
     name: "",
     avatar: "",
+    role: "",
   };
 };
 
@@ -24,6 +25,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar;
+  },
+  SET_ROLE: (state, role) => {
+    state.role = role;
   },
 };
 
@@ -51,7 +55,9 @@ const actions = {
       getInfo(state.token)
         .then((response) => {
           const { data } = response;
-
+          const roles = ["", "sys_admin", "admin", "student"];
+          const role = roles[data.role_id];
+          commit("SET_ROLE", role);
           if (!data) {
             return reject("Verification failed, please Login again.");
           }

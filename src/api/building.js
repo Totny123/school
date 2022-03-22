@@ -23,3 +23,12 @@ export function add(data) {
     data,
   });
 }
+
+export function edit(data) {
+  console.log(data);
+  return request({
+    method: "post",
+    url: "/building/edit",
+    data,
+  });
+}

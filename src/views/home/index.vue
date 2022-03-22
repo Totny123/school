@@ -1,6 +1,7 @@
 <template>
   <div class="home-container">
     <div class="home-text">欢迎您：{{ name }}</div>
+    {{ $route.meta }}
     <avue-data-tabs :option="option"></avue-data-tabs>
   </div>
 </template>

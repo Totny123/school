@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { getList, del, add } from "@/api/building";
+import { getList, del, add, edit } from "@/api/building";
 
 export default {
   data() {
@@ -49,7 +49,7 @@ export default {
             label: "管理员",
             prop: "fullname",
             bind: "manager.fullname",
-            editDisplay: false,
+            editDisplay: true,
             addDisplay: true,
             type: "select",
             props: {
@@ -114,12 +114,18 @@ export default {
         .catch(() => {});
     },
     rowUpdate(form, index, done, loading) {
-      const data = JSON.parse(JSON.stringify(form));
       loading();
-      editAdmin(data).then((res) => {
+      const data = JSON.parse(JSON.stringify(form));
+      console.log(data);
+      edit({
+        id: data.id,
+        name: data.name,
+        type: data.type,
+        admin_id: data.fullname,
+      }).then((res) => {
         done();
-        this.refreshChange();
         this.$message.success("编辑成功");
+        this.refreshChange();
       });
     },
     rowSave(form, done, loading) {
@@ -129,6 +135,7 @@ export default {
         type,
         fullname: admin_id,
       } = JSON.parse(JSON.stringify(form));
+      console.log(JSON.parse(JSON.stringify(form)));
       add({ name, type, admin_id }).then((res) => {
         done();
         this.$message.success("新增成功");

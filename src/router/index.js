@@ -34,125 +34,168 @@ export const constantRoutes = [
   {
     path: "/login",
     component: () => import("@/views/login/index"),
+    permission: ["sys_admin", "admin", "student"],
     hidden: true,
   },
   {
     path: "/404",
     component: () => import("@/views/404"),
+    permission: ["sys_admin", "admin", "student"],
     hidden: true,
   },
   {
     path: "/",
     component: Layout,
     redirect: "/home",
+    permission: ["sys_admin", "admin", "student"],
     children: [
       {
         path: "home",
         name: "Home",
         component: () => import("@/views/home/index"),
-        meta: { title: "首页", icon: "el-icon-s-home" },
+        meta: {
+          title: "首页",
+          icon: "el-icon-s-home",
+        },
       },
     ],
   },
   {
     path: "/admin",
     component: Layout,
+    permission: ["sys_admin"],
     children: [
       {
         path: "index",
         name: "Admin",
         component: () => import("@/views/admin/index"),
-        meta: { title: "楼宇管理员管理", icon: "el-icon-user" },
+        meta: {
+          title: "楼宇管理员管理",
+          icon: "el-icon-user",
+        },
       },
     ],
   },
   {
     path: "/student",
     component: Layout,
+    permission: ["sys_admin", "admin"],
     children: [
       {
         path: "index",
         name: "Student",
         component: () => import("@/views/student/index"),
-        meta: { title: "学生管理", icon: "el-icon-user-solid" },
+        meta: {
+          title: "学生管理",
+          icon: "el-icon-user-solid",
+        },
       },
     ],
   },
   {
     path: "/building",
     component: Layout,
+    permission: ["sys_admin"],
     children: [
       {
         path: "index",
         name: "Building",
         component: () => import("@/views/building/index"),
-        meta: { title: "楼宇管理", icon: "el-icon-office-building" },
+        meta: {
+          title: "楼宇管理",
+          icon: "el-icon-office-building",
+        },
       },
     ],
   },
   {
     path: "/dormitory",
     component: Layout,
+    permission: ["sys_admin", "admin"],
     children: [
       {
         path: "index",
         name: "Dormitory",
         component: () => import("@/views/dormitory/index"),
-        meta: { title: "宿舍管理", icon: "el-icon-school" },
+        meta: {
+          title: "宿舍管理",
+          icon: "el-icon-school",
+        },
       },
     ],
   },
   {
     path: "/checkIn",
     component: Layout,
+    permission: ["sys_admin", "admin"],
     children: [
       {
         path: "index",
         name: "CheckIn",
         component: () => import("@/views/checkIn/index"),
-        meta: { title: "学生入住登记", icon: "el-icon-s-marketing" },
+        meta: {
+          title: "学生入住登记",
+          icon: "el-icon-s-marketing",
+        },
       },
     ],
   },
   {
     path: "/moveOut",
     component: Layout,
+    permission: ["sys_admin", "admin"],
     children: [
       {
         path: "index",
         name: "MoveOut",
         component: () => import("@/views/moveOut/index"),
-        meta: { title: "学生迁出登记", icon: "el-icon-scissors" },
+        meta: {
+          title: "学生迁出登记",
+          icon: "el-icon-scissors",
+        },
       },
     ],
   },
   {
     path: "/editUser",
     component: Layout,
+    permission: ["sys_admin", "admin", "student"],
     children: [
       {
         path: "index",
         name: "EditUser",
         component: () => import("@/views/editUser/index"),
-        meta: { title: "修改密码", icon: "el-icon-edit-outline" },
+        meta: {
+          title: "修改密码",
+          icon: "el-icon-edit-outline",
+        },
       },
     ],
   },
   {
     path: "/logOut",
     component: Layout,
+    permission: ["sys_admin", "admin", "student"],
     children: [
       {
         path: "index",
         name: "LogOut",
         component: () => import("@/views/logOut/index"),
-        meta: { title: "退出系统", icon: "el-icon-refresh-right" },
+        meta: {
+          title: "退出系统",
+          icon: "el-icon-refresh-right",
+        },
       },
     ],
   },
 
   // 404 page must be placed at the end !!!
-  { path: "*", redirect: "/404", hidden: true },
+  {
+    path: "*",
+    redirect: "/404",
+    hidden: true,
+    permission: ["sys_admin", "admin", "student"],
+  },
 ];
 
 const createRouter = () =>
