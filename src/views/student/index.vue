@@ -13,15 +13,67 @@
       @row-save="rowSave"
       @search-change="searchChange"
     >
+      <template slot-scope="{ row, type, size }" slot="menu">
+        <el-button
+          icon="el-icon-check"
+          :size="size"
+          :type="type"
+          @click="checkIn(row)"
+          >入住</el-button
+        >
+        <el-button
+          icon="el-icon-close"
+          :size="size"
+          :type="type"
+          @click="out(row)"
+          >迁出</el-button
+        >
+      </template>
     </avue-crud>
+    <el-dialog title="入住登记" :visible.sync="inVisible" width="30%">
+      <el-form ref="form" label-width="80px" size="mini">
+        <el-form-item label="宿舍列表">
+          <el-select
+            v-model="selectDormitory"
+            placeholder="请选择宿舍"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="item in dormitoryList"
+              :key="item.id"
+              :value="item.id"
+              :label="
+                '楼宇：' +
+                item.building.name +
+                ' 宿舍：' +
+                item.dormitory_number
+              "
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="inVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleIn">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { getStu, delStu, editStu, addStu } from "@/api/student";
+import { getStu, delStu, editStu, addStu, stuIn, stuOut } from "@/api/student";
+import { getList } from "@/api/dormitory";
 
 export default {
   data() {
     return {
+      dormitoryList: [],
+      selectDormitory: "",
+      inOrOut: {
+        student_id: "",
+        dormitory_id: "",
+      },
+      inVisible: false,
+      outVisible: false,
       loading: false,
       page: {
         total: 0,
@@ -31,6 +83,7 @@ export default {
       },
       tableData: [],
       option: {
+        menuWidth: 300,
         border: true,
         align: "center",
         menuAlign: "center",
@@ -59,12 +112,21 @@ export default {
             prop: "password",
             showColumn: false,
           },
+          {
+            label: "所在宿舍",
+            prop: "dormitory_number",
+            editDisplay: false,
+            addDisplay: false,
+          },
         ],
       },
     };
   },
   created() {
     this.getAdmins();
+    getList().then((res) => {
+      this.dormitoryList = res.data;
+    });
   },
   methods: {
     getAdmins() {
@@ -138,6 +200,47 @@ export default {
         this.tableData = res.data;
         this.page.total = res.total;
       });
+    },
+    checkIn(row) {
+      this.inOrOut.student_id = row.id;
+      this.inVisible = true;
+    },
+    out(row) {
+      this.inOrOut.student_id = row.id;
+      this.$confirm("是否迁出该学生？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          stuOut(this.inOrOut)
+            .then((res) => {
+              this.$message.success("迁出成功");
+              this.refreshChange();
+            })
+            .catch((err) => {});
+        })
+        .catch(() => {});
+    },
+    handleIn() {
+      this.inVisible = false;
+      this.inOrOut.dormitory_id = this.selectDormitory;
+      stuIn(this.inOrOut)
+        .then((res) => {
+          this.$message.success("入住成功");
+          this.refreshChange();
+        })
+        .catch((err) => {});
+    },
+    handleOut() {
+      this.outVisible = false;
+      this.inOrOut.dormitory_id = this.selectDormitory;
+      stuOut(this.inOrOut)
+        .then((res) => {
+          this.$message.success("迁出成功");
+          this.refreshChange();
+        })
+        .catch((err) => {});
     },
   },
 };

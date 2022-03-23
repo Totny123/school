@@ -31,3 +31,19 @@ export function addStu(data) {
     data,
   });
 }
+
+export function stuIn(data) {
+  return request({
+    url: "student/stuIn",
+    method: "post",
+    data,
+  });
+}
+
+export function stuOut(data) {
+  return request({
+    url: "student/stuOut",
+    method: "post",
+    data,
+  });
+}

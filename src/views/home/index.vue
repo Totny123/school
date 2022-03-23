@@ -1,7 +1,6 @@
 <template>
   <div class="home-container">
     <div class="home-text">欢迎您：{{ name }}</div>
-    {{ $route.meta }}
     <avue-data-tabs :option="option"></avue-data-tabs>
   </div>
 </template>
@@ -19,40 +18,22 @@ export default {
       option: {
         data: [
           {
-            click: function (item) {
-              alert(JSON.stringify(item));
-            },
-            title: "分类统计",
+            title: "楼宇统计",
             subtitle: "实时",
-            count: 7993,
-            allcount: 10222,
-            text: "当前分类总记录数",
+            count: 79,
             color: "rgb(27, 201, 142)",
-            key: "类",
           },
           {
-            click: function (item) {
-              alert(JSON.stringify(item));
-            },
-            title: "附件统计",
+            title: "宿舍统计",
             subtitle: "实时",
-            count: 3112,
-            allcount: 10222,
-            text: "当前上传的附件数",
+            count: 311,
             color: "rgb(230, 71, 88)",
-            key: "附",
           },
           {
-            click: function (item) {
-              alert(JSON.stringify(item));
-            },
-            title: "文章统计",
+            title: "学生统计",
             subtitle: "实时",
-            count: 908,
-            allcount: 10222,
-            text: "评论次数",
+            count: 1342,
             color: "rgb(178, 159, 255)",
-            key: "评",
           },
         ],
       },

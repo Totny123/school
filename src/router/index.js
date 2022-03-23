@@ -124,34 +124,66 @@ export const constantRoutes = [
       },
     ],
   },
+  // {
+  //   path: "/checkIn",
+  //   component: Layout,
+  //   permission: ["sys_admin", "admin"],
+  //   children: [
+  //     {
+  //       path: "index",
+  //       name: "CheckIn",
+  //       component: () => import("@/views/checkIn/index"),
+  //       meta: {
+  //         title: "学生入住登记",
+  //         icon: "el-icon-s-marketing",
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: "/moveOut",
+  //   component: Layout,
+  //   permission: ["sys_admin", "admin"],
+  //   children: [
+  //     {
+  //       path: "index",
+  //       name: "MoveOut",
+  //       component: () => import("@/views/moveOut/index"),
+  //       meta: {
+  //         title: "学生迁出登记",
+  //         icon: "el-icon-scissors",
+  //       },
+  //     },
+  //   ],
+  // },
   {
-    path: "/checkIn",
+    path: "/repair/list",
     component: Layout,
     permission: ["sys_admin", "admin"],
     children: [
       {
         path: "index",
-        name: "CheckIn",
-        component: () => import("@/views/checkIn/index"),
+        name: "RepairList",
+        component: () => import("@/views/repair/list"),
         meta: {
-          title: "学生入住登记",
-          icon: "el-icon-s-marketing",
+          title: "维修信息查询",
+          icon: "el-icon-edit-outline",
         },
       },
     ],
   },
   {
-    path: "/moveOut",
+    path: "/repair",
     component: Layout,
-    permission: ["sys_admin", "admin"],
+    permission: ["student"],
     children: [
       {
         path: "index",
-        name: "MoveOut",
-        component: () => import("@/views/moveOut/index"),
+        name: "Repair",
+        component: () => import("@/views/repair/index"),
         meta: {
-          title: "学生迁出登记",
-          icon: "el-icon-scissors",
+          title: "上报维修信息",
+          icon: "el-icon-edit-outline",
         },
       },
     ],
